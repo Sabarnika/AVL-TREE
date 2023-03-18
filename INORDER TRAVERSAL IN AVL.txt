@@ -1,0 +1,73 @@
+// You are using GCC
+#include<stdio.h>
+#include<stdlib.h>
+enum Color
+{
+    RED,
+    BLACK
+};
+struct node 
+{
+    int data;
+    enum Color color;
+    struct node *left;
+    struct node *right;
+    struct node *parent;
+};
+struct node *newnode(int data)
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    temp->data=data;
+    temp->left=temp->right=NULL;
+    temp->color=BLACK;
+    temp->parent=NULL;
+    return temp;
+}
+void inorder(struct node *root)
+{
+    if(root==NULL)
+        return;
+    else 
+    {
+        inorder(root->left);
+        printf("%d ",root->data);
+        inorder(root->right);
+    }
+}
+struct node *insert(struct node *root,int data)
+{
+    if(root==NULL)
+        return newnode(data);
+    if(data<root->data)
+    {
+        root->left=insert(root->left,data);
+    }
+    else if(data>root->data)
+    {
+        root->right=insert(root->right,data);
+    }
+    return root;
+}
+int main()
+{
+    struct node *root=NULL;
+    int r;
+    scanf("%d",&r);
+    root=insert(root,r);
+    int d;
+    for(int i=1;i<10;i++)
+    {
+        scanf("%d",&d);
+        if(d!=-1)
+        {
+            insert(root,d);
+        }
+        else
+        {
+            break;
+        }
+    }
+    printf("Tree Traversal\n");
+    inorder(root);
+}
